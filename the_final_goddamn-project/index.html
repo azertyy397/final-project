@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Organizer — Tasks • Projects • Notes</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" href="data:,"/>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo"><img src="imges/orginazed.png" alt="siteweb logo" style="width: 80px ;height: 80px;"></span>
+      <span class="title">Organizer</span>
+      <div class="actions">
+  <button id="loginBtn" class="icon-btn" title="Login"><img src="imges/login.png" alt="login logo" style="width: 20px; height: 20px;"></button>
+</div>
+    </div>
+    <nav class="nav">
+      <a href="#home" data-nav>Home</a>
+      <a href="#tasks" data-nav>Tasks</a>
+      <a href="#projects" data-nav>Projects</a>
+      <a href="#notes" data-nav>Notes</a>
+      <a href="#about" data-nav>About</a>
+    </nav>
+    <div class="actions">
+    </div>
+  </header>
+
+  <main id="app">
+    <section id="home" class="page">
+      <div class="container">
+        <h1>Welcome </h1>
+        <p class="muted">A lightweight, organizer. Everything saves in your browser.</p>
+
+        <div class="home-grid">
+          <div class="card quick-add">
+            <h2>Quick Add Task</h2>
+            <form id="quickTaskForm" class="grid">
+              <input id="quickTaskTitle" type="text" placeholder="Task title *" required>
+              <select id="quickTaskProject"></select>
+              <select id="quickTaskPriority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+              <input id="quickTaskDue" type="date">
+              <input id="quickTaskTags" type="text" placeholder="tags (comma)">
+              <button type="submit">Add</button>
+            </form>
+          </div>
+          <div class="card stats-card">
+            <h2>Overview</h2>
+            <div id="overviewStats" class="stats"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="tasks" class="page">
+      <div class="container">
+        <div class="page-header">
+          <h1>Tasks</h1>
+          <div class="tool-row">
+            <input id="taskSearch" type="search" placeholder="Search… title, tags, notes">
+            <button id="addTaskBtn">+ Task</button>
+          </div>
+        </div>
+
+
+        <div class="kanban">
+          <div class="kanban-col" data-status="todo">
+            <div class="kanban-head">
+              <h3>To Do</h3><span class="count" id="todoCount">0</span>
+            </div>
+            <div class="dropzone" id="todoZone"></div>
+          </div>
+          <div class="kanban-col" data-status="doing">
+            <div class="kanban-head">
+              <h3>In Progress</h3><span class="count" id="doingCount">0</span>
+            </div>
+            <div class="dropzone" id="doingZone"></div>
+          </div>
+          <div class="kanban-col" data-status="done">
+            <div class="kanban-head">
+              <h3>Done</h3><span class="count" id="doneCount">0</span>
+            </div>
+            <div class="dropzone" id="doneZone"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <dialog id="taskModal">
+        <form method="dialog" id="taskForm">
+          <h2 id="taskModalTitle">New Task</h2>
+          <div class="form-grid">
+            <label>Title* <input id="taskTitle" required maxlength="120"></label>
+            <label>Description <textarea id="taskDesc" rows="3" maxlength="1000"></textarea></label>
+            <label>Project
+              <select id="taskProject"></select>
+            </label>
+            <label>Priority
+              <select id="taskPriority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+            <label>Due date <input id="taskDue" type="date"></label>
+            <label>Tags (comma) <input id="taskTags"></label>
+          </div>
+          <menu>
+            <button value="cancel" class="secondary">Cancel</button>
+            <button id="deleteTaskBtn" class="danger" type="button" hidden>Delete</button>
+            <button id="saveTaskBtn" value="default">Save</button>
+          </menu>
+        </form>
+      </dialog>
+    </section>
+
+
+    <section id="projects" class="page">
+      <div class="container">
+        <div class="page-header">
+          <h1>Projects</h1>
+          <div class="tool-row">
+            <input id="projectNameInput" placeholder="New project name">
+            <input id="projectColorInput" type="color" value="#4f46e5" title="Project color">
+            <button id="addProjectBtn">+ Project</button>
+          </div>
+        </div>
+
+        <div id="projectGrid" class="project-grid"></div>
+
+
+        <dialog id="projectModal">
+          <form method="dialog" id="projectForm">
+            <h2>Edit Project</h2>
+            <label>Name <input id="editProjectName" maxlength="80"></label>
+            <label>Color <input id="editProjectColor" type="color"></label>
+            <menu>
+              <button value="cancel" class="secondary">Cancel</button>
+              <button id="deleteProjectBtn" class="danger" type="button">Delete</button>
+              <button id="saveProjectBtn" value="default">Save</button>
+            </menu>
+          </form>
+        </dialog>
+      </div>
+    </section>
+
+
+    <section id="notes" class="page">
+      <div class="container">
+        <div class="page-header">
+          <h1>Notes</h1>
+          <div class="tool-row">
+            <textarea id="noteInput" rows="3" placeholder="Write a note…"></textarea>
+            <button id="addNoteBtn">+ Add Note</button>
+          </div>
+        </div>
+        <div id="noteList" class="notes-grid"></div>
+      </div>
+    </section>
+
+
+    <section id="about" class="page">
+      <div class="container">
+        <h1>About</h1>
+        <p>ismi moataz w la9abi romdhani ey wzeda na9ra 3eme info khw.</p>
+        <ul>
+          <li>Tasks with priorities, due dates, tags, search & drag-and-drop Kanban</li>
+          <li>Projects</li>
+          <li>Notes</li>
+        </ul>
+        <p class="muted small">Made for learning & personal use.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container row-between">
+      <span class="muted small">Everything is stored locally in your browser.</span>
+      <button id="resetAllBtn" class="danger outline small" style="color: white;">Reset All Data</button>
+    </div>
+  </footer>
+
+  <template id="taskCardTemplate">
+    <article class="task-card" draggable="true">
+      <div class="row-between">
+        <div class="row gap">
+          <span class="priority-dot" title="Priority"></span>
+          <h4 class="task-title"></h4>
+        </div>
+        <button class="icon-btn edit" title="Edit">edit</button>
+      </div>
+      <div class="task-meta">
+        <span class="project-pill"></span>
+        <span class="due"></span>
+      </div>
+      <div class="tags"></div>
+      <div class="row-between">
+        <label class="row gap small">
+          <input type="checkbox" class="complete-toggle">
+          <span>Completed</span>
+        </label>
+        <button class="icon-btn delete" title="Delete">delete</button>
+      </div>
+    </article>
+  </template>
+    <!-- Login Panel (Visual Only) -->
+  <div id="loginPanel" class="login-panel">
+    <div class="login-content">
+      <button id="closeLogin" class="icon-btn close-btn">✕</button>
+      <h2>Login</h2>
+      <form id="loginForm">
+        <label>
+          Email
+          <input type="email" id="loginEmail" placeholder="your@email.com">
+        </label>
+        <label>
+          Password
+          <input type="password" id="loginPassword" placeholder="••••••••">
+        </label>
+        <button type="button" class="login-submit-btn">Sign In</button>
+      </form>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
